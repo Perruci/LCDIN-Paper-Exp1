@@ -11,5 +11,38 @@
 \item Resistores de $470\Omega$ e $2.2K\Omega$
 \end{itemize}
 
+\subsection{Circuito de Amplificação}
+
+Foi montado na protoboard do kit impressora um circuito amplificador não inversor de forma a amplificar o sinal de erro. O ganho de amplificação escolhido foi $K$, conforme a equação \ref{eq::ganho_nao_inversor}.  A entrada do circuito foi conectada ao sinal de erro, proveniente de um amplificador de diferenças. A saída do circuito amplificador não inversor é o sinal de controle proporcional que comanda o motor do carro de impressora.
+
+\begin{equation}
+K = 1 + \frac{2.2k\Omega}{470\Omega} = 5.68
+\label{eq::ganho_nao_inversor}
+\end{equation}
+
+O potenciômetro de amplificação do kit foi mantido na posição 1 durante todo o experimento.
+
+\begin{equation}
+K_p = 1
+\label{eq::ganho_pot}
+\end{equation}
+
 \subsection{Metodologia}
+
+
+Inicialmente, quanto à verificação do funcionamento da impressora, o sinal de erro atenuado foi conectado ao pino de divisor de tensão do arduíno. Os pinos do sinal de erro atenuado e do divisor de tensão são o pino 6 da protoboard 2 e o pino 1 da protoboard 1, respectivamente. Em seguida, afim de zerar o encoder, o carro foi colocado à extrema direita do trilho. Em seguida foi suprida uma tensão de $\pm 12V$, depois GND e, por fim, no modo turbo, suprindo 18V. Como descrito pelo roteiro, o carro se posicionou no centro do trilho.
+
+Após isso, os resistores de $470\Omega$ e $2,2k\Omega$ foram montados na protoboard 1 e o potenciômetro foi ajustado para $0,5$. Isso foi feito com o intuito de obter-se o ganho não-inversor conforme a equação \ref{eq::ganho_nao_inversor}. Novamente energizado o carro, este se deslocou até o centro do trilho.
+
+Em seguida, utilizando uma onda quadrada como referência ($2Vpp, 1 Hz)$ e outra onda quadrada agindo como perturbação ($ 1Vpp, 0,25 Hz)$, observou-se a resposta sub-amortecida ($Mp \approx 30\%$). Dessa forma, foram utilizados dois geradores de função: um para a referência e um para a perturbação. 
+
+Mantendo a perturbação como uma onda quadrada, a referência foi trocada para uma onda triangular, de forma que se pudesse observar a resposta à rampa. 
+
+Seguidamente, utilizando $K_{pot}= 1$ e o $K$ projetado, buscou-se estimar o parâmetro $K_m$. Isso foi possível utilizando os sinais obtidos através do osciloscópio, como descrito posteriormente na seção Resultados.
+
+Por fim, com o auxílio de uma régua, foi medida a relação da posição do carro. Essa se deu na forma de $y$ metros e a tensão $y_v$ em Volts.
+
+Ao fim de cada etapa foram salvos os sinais do osciloscópio para posterior análise, como demonstrado nas seções a seguir.
+
+
 

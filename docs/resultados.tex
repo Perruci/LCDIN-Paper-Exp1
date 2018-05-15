@@ -5,8 +5,11 @@
 \input{figures/results_ramp.tex}
 \input{figures/results_ramp_noise.tex}
 
-O experimento foi realizado em conformidade às instruções \cite{CDIN:Roteiro1} resumidas na seção \ref{sec::materiais_metodos}. Os dados foram adquiridos por meio dos canais de osciloscópios digitais e exportados para ambiente MATLAB.
+\input{figures/measurement_step.tex}
+\input{figures/results_simulated.tex}
+
+O experimento foi realizado em conformidade às instruções \cite{CDIN:Roteiro1} resumidas na seção \ref{sec::materiais_metodos}. Os dados foram adquiridos por meio dos canais de osciloscópios digitais e exportados para ambiente MATLAB \cite{Moler:1980:MATLAB}.
 
 A resposta do sistema ao degrau unitário encontra-se expresso na figura \ref{fig::step_response}. Adicionando-se a perturbação em forma de onda quadrada, o sistema comporta-se conforme a figura \ref{fig::step_noise_response}. As curvas observadas para o sinal de referência rampa unitária estão expressas na figura \ref{fig::ramp_response}. Ao adicionar-se a perturbação, o sistema assume o comportamento da figura \ref{fig::ramp_noise_response}.
 
-Faz-se importante mencionar que o período de amostragem não mostrou-se constante nos dados adquiridos. Contudo, para efeitos de análise deste relatório, utilizamos a moda da distribuição: $1ms$.
+Faz-se importante mencionar que o período de amostragem não mostrou-se constante nos dados adquiridos. Contudo, para efeitos do filtro butterworth implementado nas figuras \ref{fig::step_response}, \ref{fig::step_noise_response}, \ref{fig::ramp_response} e \ref{fig::ramp_noise_response} deste relatório, utilizamos a moda da distribuição: $1ms$. Para um filtro de segunda ordem e frequência de corte $5Hz$, a dinâmica do filtro não parece ter interferido muito na dinâmica do sistema.

@@ -1,1 +1,75 @@
-\section{Discussão e Conclusões}
+\section{Discussão}
+
+\subsection{Estimação de Parâmetros}
+A partir do sinal de posição do carro filtrado, expresso na figura \ref{fig::step_response}, foi possível estimar os parâmetros: tempo de pico ($t_p$), valor de pico ($V_p$) e comportamento em regime permanente do sistema ($G_{ss}$), como do sinal de referência ($R_{ss}$). Para tanto, utilizou-se a função \textit{stepinfo()} da toolbox de sistemas de controle do MATLAB \cite{Grace:1992:MATLAB_Control_Toolbox}. Esses valores encontram-se expressos graficamente na figura \ref{fig::step_analysis} e na equação \ref{eq::dis::step_analysis}. O tempo de pico mostrado é o relativo entre o pico da figura \ref{fig::step_analysis} e o último instante próximo de zero: $t_p = 1.538 - 1.463$ segundos.
+
+\begin{equation}
+\begin{aligned}
+& t_p = 0.075s & V_p = 1.1565V \\
+& R_{ss} = 0.98V & G_{ss} = 0.95V \\
+\end{aligned}
+\label{eq::dis::step_analysis}
+\end{equation}
+
+Note que, a partir dos valores estimados na equação \ref{eq::dis::step_analysis} e da equação \ref{eq-tempo-pico}, é possível estimar a frequência natural do sistema $\omega_n$. De forma semelhante, é possível combinar as equações \ref{eq-zeta}, \ref{eq-Sobressinal} e \ref{eq::dis::step_analysis} de forma a computar o coeficiente de amortecimento $\zeta$. Os valores correspondentes a $\omega_n$ e $\zeta $ encontram se expressos nas equações \ref{eq::dis::natural_frequency} e \ref{eq::dis::zeta}, respectivamente.
+
+\begin{equation}
+\omega_n = \frac{\pi}{t_p} = 41.8879\nicefrac{rad}{s}
+\label{eq::dis::natural_frequency}
+\end{equation}
+
+\begin{equation}
+\zeta = 0.4313
+\label{eq::dis::zeta}
+\end{equation}
+
+Torna-se possível, portanto, estimar os parâmetros $K_m$ e $T_m$. Podemos reescrever as equações expressas em \ref{eq::comparison-second-order-plant}, conforme as equações \ref{eq::dis::km} e \ref{eq::dis::tm}. Substituindo-se as expressões de $k$, $k_p$, $\omega_n$ e $\zeta$ das equações \ref{eq::ganho_nao_inversor}, \ref{eq::ganho_pot}, \ref{eq::dis::natural_frequency} e \ref{eq::dis::zeta}, chega-se a valores numéricos para $k_m$ e $T_m$.
+
+\begin{equation}
+K_m = \frac{\omega_n}{2 \zeta k_p k } = 8.55 
+\label{eq::dis::km}
+\end{equation}
+
+\begin{equation}
+T_m = \frac{1}{2 \zeta \omega_n} = 0.028 
+\label{eq::dis::tm}
+\end{equation}
+
+
+
+\subsection{Simulação do Processo}
+
+Utilizando-se os parâmetros estimados para frequência natural e coeficiente de amortecimento, equações \ref{eq::dis::natural_frequency} \ref{eq::dis::zeta}, faz-se possível simular o processo e compará-lo com a resposta experimental. Dessa maneira, substituindo-se $\omega_n$ e $\zeta$ na equação \ref{eq::second-order-model}, temos o sistema de segunda ordem representado pela equação \ref{eq::dis::simulacao}. A simulação encontra-se expressa na figura \ref{fig::simulacao}.
+
+\begin{equation}
+G(S) = \frac{1755}{S^2 + 36.13 S + 1755}
+\label{eq::dis::simulacao}
+\end{equation}
+
+\subsection{Erro em Regime Permanente}
+
+O erro em regime permanente experimental pôde ser extraído da resposta do sistema para entradas degrau, degrau + perturbação, rampa e rampa + perturbação. O erro foi extraído das figuras \ref{fig::step_response}, \ref{fig::step_noise_response}, \ref{fig::ramp_response} e \ref{fig::ramp_noise_response} como a diferença de entre entrada e saída quando o sistema alcança o regime permanente. Também foi calculado o erro do sistema simulado, cuja função de transferência é a equação \ref{eq::dis::simulacao} e a resposta está expressa na equação \ref{fig::simulacao}. Os resultados de erros estão resumidos na tabela \ref{tab::errors}.
+
+\input{tables/steady_state.tex}
+
+\subsection{Questões Teóricas}
+O esclarecimento das questões teóricas solicitadas em \cite{CDIN:Roteiro1} condensadas nesta subseção.
+
+\subsubsection{"De que maneira o “turbo” afeta o experimento? ess? Valores de Km e Tm?"}
+
+
+
+O acionamento do canal turbo proporciona uma resposta mais rápida do motor do kit impressora. Dessa forma, para o modelo da planta, pode ser interpretado como um fator que eleva a expressão de $k_m$ e, portanto, eleva o ganho do sistema como um todo e diminui a constante de tempo $T_m$. O efeito em regime permanente do sistema seria uma atenuação no erro $e_{ss}$ para a entrada rampa.
+
+\subsubsection{"Que alteração haveria nos erros calculados (Tabela. 1) se fosse utilizado um controlador com canal integral? Qual a alteração na tipologia (para R e para W)?"}
+
+O controlador de canal integral elevaria o tipo do sistema trabalhado nesse experimento. Dessa maneira, poderia reduzir para próximo de zero o erro em regime permanente para a entrada rampa unitária $R(S)$. Já para a entrada adicionada de perturbação, $W(S)$, o comportamento mais rápido do sistema poderia levar a instabilidades.
+
+\subsubsection{"Considerando o controlador P utilizado neste experimento e um controlador PI, que diferença haveria na dinâmica (i.e., no tempo de pico e no tempo de subida) da resposta à perturbação?"}
+
+A resposta do sistema seria mais rápida com a adição de um componente integrador. Dessa maneira, o sistema torna-se mais sensível às mudanças repentinas de amplitude provocadas pela perturbação. Este efeito pode levar a um tempo de subida e tempo de pico mais curtos, mas um sobresinal mais elevado.
+
+
+\section{Conclusões}
+
+O experimento realizou seu objetivo ao introduzir os estudantes a um sistema de controle real, em que realizou-se a identificação de parâmetros do kit impressora e estimou-se erros em regime permanente. A familiarização com a planta de controle introduzida neste experimento também é essencial para os experimentos futuros do laboratório de controle dinâmico.
